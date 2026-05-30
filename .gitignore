@@ -1,0 +1,23 @@
+# Виртуальное окружение
+.venv/
+venv/
+ENV/
+
+# Кэш Python (автоматически создаваемые папки компиляции)
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Настройки VS Code
+.vscode/
+
+# Логи и временные файлы
+*.log
+.pytest_cache/
+.htmlcov/
+htmlcov/
+
+# Специфичные файлы операционных систем
+Thumbs.db
+.DS_Store
