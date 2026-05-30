@@ -17,6 +17,9 @@ class Clickable():
         self.__clicked = False
         print("Released")
 
+    def on_mouse_leave(self):
+        pass
+
     def handle_event(self, event: pg.Event):
         if event.type == pg.MOUSEBUTTONDOWN:
             btn = event.dict['button']
@@ -31,4 +34,4 @@ class Clickable():
         elif event.type == pg.MOUSEMOTION and self.__clicked:
             pos = event.dict['pos']
             if not self._rect.collidepoint(pos):
-                self.on_released()
+                self.on_mouse_leave()
