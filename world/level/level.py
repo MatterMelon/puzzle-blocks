@@ -10,8 +10,9 @@ TILEMAP_NAME_SUFFIX = "TileMap"
 
 class Level:
     def __init__(self, data: LevelData):
+        logger.info("Level: Start building...")
         if data is None:
-            raise ValueError("Level: Cannot create a level with None data")
+            raise ValueError("Level: Cannot build a level with None data")
 
         self._data = data
         self._tilemaps: list[TileMap] = [self._get_tilemap_class(layer['tilemap'])() for layer in data.map_data['tilemap_layers']]
@@ -32,9 +33,9 @@ class Level:
                 for x_index, tile in enumerate(row):
                     tile_obj = tilemap.TileType.__members__.get(tile, tilemap.TileType.UNKNOWN)
                     if tile_obj == 0:
-                        logger.warning("Level '{id}': Tile '{tile}' is missing", id=self._data.id, tile=tile)
+                        logger.warning("Level: Tile '{tile}' in '{id}' at [{x}, {y}] is missing", id=self._data.id, tile=tile, x=x_index, y=y_index)
                     tilemap.place_tile(tile_obj, x_index, y_index, True)
-        logger.success("Level '{id}': Level built", id=self._data.id)
+        logger.success("Level: '{id}' built", id=self._data.id)
 
     def draw(self, surface: Surface) -> None:
         for tilemap in self._tilemaps:

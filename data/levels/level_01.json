@@ -20,7 +20,9 @@
                     ["WALL","GRASS","GRASS","GRASS","GRASS","GRASS","GRASS","GRASS","EXIT","WALL"],
                     ["WALL","GRASS","WALL","WALL","WALL","GRASS","WALL","WALL","GRASS","WALL"],
                     ["WALL","GRASS","GRASS","GRASS","GRASS","GRASS","GRASS","GRASS","GRASS","WALL"],
-                    ["WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL"]
+                    ["WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL"],
+                    ["DOOR","DOOR","WALL","WALL","DOOR","WALL","WALL","WALL","WALL","WALL"]
+
                 ]
             }
         ]

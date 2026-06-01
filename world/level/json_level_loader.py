@@ -20,7 +20,7 @@ class JsonLevelLoader(LevelLoader):
                     data['map'],
                     data['entities']
                 )
-                logger.success("Level '{id}': Data loaded", id=level_data.id)
+                logger.success("Level: '{id}' data loaded", id=level_data.id)
                 return level_data
         except json.JSONDecodeError:
             logger.exception("Level: Data parsing error")
