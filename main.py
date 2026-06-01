@@ -2,6 +2,7 @@ import sys
 
 import pygame as pg
 
+from world.levels.json_level_loader import JsonLevelLoader
 from world.tilemaps.base_tile_map import BaseTileMap
 
 pg.init()
@@ -18,6 +19,9 @@ tilemap = BaseTileMap()
 for i in range(100):
     for j in range(100):
         tilemap.place_tile(tilemap.TileType.WALL, i, j, True)
+    
+data = JsonLevelLoader.load('./data/levels/level_01.json')
+print(data)
 
 while True:
     for e in pg.event.get():
