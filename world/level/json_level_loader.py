@@ -13,9 +13,9 @@ class JsonLevelLoader(LevelLoader):
             with open(path, 'r', encoding='utf-8') as file:
                 data = json.load(file)
                 level_data = LevelData(
-                    data['id'],
-                    data['name'],
-                    data['description'],
+                    str.strip(data['id']),
+                    str.strip(data['name']),
+                    str.strip(data['description']),
                     data['goals'],
                     data['map'],
                     data['entities']

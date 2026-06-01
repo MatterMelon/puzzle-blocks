@@ -2,8 +2,8 @@ import sys
 
 import pygame as pg
 
-from world.levels.json_level_loader import JsonLevelLoader
-from world.tilemaps.base_tile_map import BaseTileMap
+from world.level.json_level_loader import JsonLevelLoader
+from world.level.level import Level
 
 pg.init()
 pg.font.init()
@@ -14,14 +14,8 @@ pg.display.set_caption("PuzzleBlocks")
 font = pg.font.SysFont('Arial', 24)
 clock = pg.time.Clock()
 
-tilemap = BaseTileMap()
-
-for i in range(100):
-    for j in range(100):
-        tilemap.place_tile(tilemap.TileType.WALL, i, j, True)
-    
-data = JsonLevelLoader.load('./data/levels/level_01.json')
-print(data)
+level_data = JsonLevelLoader.load('./data/levels/level_01.json')
+level = Level(level_data)
 
 while True:
     for e in pg.event.get():
@@ -30,7 +24,6 @@ while True:
             sys.exit()
             
     screen.fill(pg.Color(255,255,255))
-    tilemap.draw_tiles(screen)
-    # screen.blit(image, image_pos)
+    level.draw(screen)
     pg.display.flip()
     clock.tick(60)

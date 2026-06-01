@@ -12,18 +12,18 @@
     "map": {
         "width": 10,
         "height": 8,
-
-        "tilemap_layer": 
-        {
-            "tilemap": "test",
-            "tiles": [
-                ["WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL"],
-                ["WALL","GRASS","GRASS","GRASS","GRASS","GRASS","GRASS","GRASS","EXIT","WALL"],
-                ["WALL","GRASS","WALL","WALL","WALL","GRASS","WALL","WALL","GRASS","WALL"],
-                ["WALL","GRASS","GRASS","GRASS","GRASS","GRASS","GRASS","GRASS","GRASS","WALL"],
-                ["WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL"]
-            ]
-        }
+        "tilemap_layers": [
+            {
+                "tilemap": "test",
+                "tiles": [
+                    ["WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL"],
+                    ["WALL","GRASS","GRASS","GRASS","GRASS","GRASS","GRASS","GRASS","EXIT","WALL"],
+                    ["WALL","GRASS","WALL","WALL","WALL","GRASS","WALL","WALL","GRASS","WALL"],
+                    ["WALL","GRASS","GRASS","GRASS","GRASS","GRASS","GRASS","GRASS","GRASS","WALL"],
+                    ["WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL"]
+                ]
+            }
+        ]
     },
 
     "entities": [
