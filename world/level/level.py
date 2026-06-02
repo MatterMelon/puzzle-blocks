@@ -1,3 +1,4 @@
+from loguru import logger
 from pygame import Surface
 
 from world.tilemap.tilemap_renderer import TilemapRenderer
@@ -12,6 +13,10 @@ class Level:
         # TODO: Разпределить данные из data по полям класса: id, description, goals...
         self._data = data
         self._tilemap_renderer: TilemapRenderer = TilemapRenderer(data.map_data.tilemap_layers)
+
+    def build(self) -> None:
+        logger.info(f"Level: Start building '{self._data.id}")
+        self._tilemap_renderer.build()
 
     def draw(self, surface: Surface) -> None:
         self._tilemap_renderer.render(surface)

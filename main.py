@@ -16,6 +16,7 @@ clock = pg.time.Clock()
 
 level_data = JsonLevelLoader.load('./data/levels/level_01.json')
 level = Level(level_data)
+level.build()
 
 while True:
     for e in pg.event.get():
