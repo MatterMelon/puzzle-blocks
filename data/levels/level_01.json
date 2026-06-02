@@ -14,7 +14,7 @@
         "height": 8,
         "tilemap_layers": [
             {
-                "tilemap": "test",
+                "tilemap_id": "test",
                 "tiles": [
                     ["WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL"],
                     ["WALL","GRASS","GRASS","GRASS","GRASS","GRASS","GRASS","GRASS","EXIT","WALL"],
