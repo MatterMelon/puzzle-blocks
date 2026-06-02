@@ -1,5 +1,6 @@
 import json
 
+from level.level_map_data import LevelMapData
 from loguru import logger
 
 from .level_data import LevelData
@@ -17,7 +18,11 @@ class JsonLevelLoader(LevelLoader):
                     str.strip(data['name']),
                     str.strip(data['description']),
                     data['goals'],
-                    data['map'],
+                    LevelMapData(
+                        data['map']['width'],
+                        data['map']['height'],
+                        data['map']['tiles'],
+                    ),
                     data['entities']
                 )
                 logger.success("Level: '{id}' data loaded", id=level_data.id)
