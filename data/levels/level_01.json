@@ -1,0 +1,38 @@
+{
+    "id": "test_01",
+    "name": "First test level",
+    "description": "Level for testing",
+
+    "goals": [
+        {
+            "type": "reach_exit"
+        }
+    ],
+
+    "map": {
+        "width": 10,
+        "height": 8,
+        "tilemap_layers": [
+            {
+                "tilemap_id": "test",
+                "tiles": [
+                    ["WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL"],
+                    ["WALL","GRASS","GRASS","GRASS","GRASS","GRASS","GRASS","GRASS","EXIT","WALL"],
+                    ["WALL","GRASS","WALL","WALL","WALL","GRASS","WALL","WALL","GRASS","WALL"],
+                    ["WALL","GRASS","GRASS","GRASS","GRASS","GRASS","GRASS","GRASS","GRASS","WALL"],
+                    ["WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL","WALL"],
+                    ["DOOR","DOOR","WALL","WALL","DOOR","WALL","WALL","WALL","WALL","WALL"]
+
+                ]
+            }
+        ]
+    },
+
+    "entities": [
+        {
+            "type": "player",
+            "x": 1,
+            "y": 1
+        }
+    ]
+}

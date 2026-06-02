@@ -3,16 +3,17 @@ from enum import IntEnum
 from pygame import Surface
 from pygame.sprite import Group
 
-from .spritesheet import SpriteSheet
+from ..spritesheet import SpriteSheet
+from .exceptions import MissingTileData
 from .tile import Tile
 from .tile_definition import TileDefinition
 
 
-class TileMap:
+class Tilemap:
     def __init__(self, spritesheet: SpriteSheet, tiles_data: dict[int, TileDefinition]):
-        self.__spritesheet: SpriteSheet = spritesheet
-        self.__tiles_data: dict[int, TileDefinition] = tiles_data
-        self.__tiles: Group = Group()
+        self._spritesheet: SpriteSheet = spritesheet
+        self._tiles_data: dict[int, TileDefinition] = tiles_data
+        self._tiles: Group = Group()
     
     def __init_subclass__(cls):
         super().__init_subclass__()
@@ -28,21 +29,21 @@ class TileMap:
             )
     
     def get_grid_size(self) -> int:
-        return self.__spritesheet.get_grid_size()
+        return self._spritesheet.get_grid_size()
 
     def get_tiles_data(self) -> dict[int, TileDefinition]:
-        return self.__tiles_data
+        return self._tiles_data
 
     def get_tiles(self) -> Group:
-        return self.__tiles
+        return self._tiles
     
     def place_tile(self, id: int, pos_x: int, pos_y: int, use_grid_snap: bool = False) -> None:
-        td = self.__tiles_data.get(id)
+        td = self._tiles_data.get(id)
 
         if not td: 
-            raise self.MissingTileData(f"Tried to get TileData by ID = {id}")
+            raise MissingTileData(f"Tried to get TileData by ID = {id}")
         
-        img = self.__spritesheet.get_image(td.frame_x, td.frame_y, td.frame_width, td.frame_height)
+        img = self._spritesheet.get_image(td.frame_x, td.frame_y, td.frame_width, td.frame_height)
         tile = Tile(id, img, td.props)
 
         if use_grid_snap:
@@ -52,13 +53,10 @@ class TileMap:
             tile.rect.x = pos_x
             tile.rect.y = pos_y
             
-        self.__tiles.add(tile)
+        self._tiles.add(tile)
 
     def delete_tile(self) -> None:
         pass
 
     def draw_tiles(self, surface: Surface) -> None:
-        self.__tiles.draw(surface)
-
-    class MissingTileData(Exception):
-        pass
+        self._tiles.draw(surface)
