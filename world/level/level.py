@@ -2,6 +2,7 @@ from loguru import logger
 from pygame import Surface
 
 import world.tilemap.tilemaps as tilemaps
+from world.tilemap.tile import Tile
 from world.tilemap.tilemap import Tilemap
 from world.tilemap.tilemap_layer_data import TilemapLayerData
 
@@ -11,7 +12,6 @@ TILEMAP_NAME_SUFFIX = "Tilemap"
 
 class Level:
     def __init__(self, data: LevelData):
-        logger.info("Level: Start building...")
         if data is None:
             raise ValueError("Level: Cannot build a level with None data")
 
@@ -36,23 +36,26 @@ class Level:
                 )
                 for layer_data in tilemap_layers
         ]
+    
+    def _resolve_tile(self, tilemap: Tilemap, tile_id: str) -> Tile:
+        try: 
+            return tilemap.TileType[tile_id]
+        except(KeyError):
+            # TODO: Добавить тайлмап для текстуры UNKNOWN.
+            #       Сейчас она берется из самого тайлмапа с ошибкой.
+            logger.warning("Level: Missing tile '{tile}' in Tilemap: '{tilemap}'", tilemap=tilemap, tile=tile_id)
+            return tilemap.TileType.UNKNOWN
+
 
     def _build_tiles(self, tilemap: Tilemap, layer_data: TilemapLayerData) -> None:
             tiles = layer_data.tiles
             for y_index, row in enumerate(tiles):
-                for x_index, tile in enumerate(row):
-                    tile_obj = None
-                    try: 
-                        tile_obj = tilemap.TileType[tile]
-                    except(KeyError):
-                        # TODO: Добавить тайлмап для текстуры UNKNOWN.
-                        #       Сейчас она берется из самого тайлмапа с ошибкой.
-                        tile_obj = tilemap.TileType.UNKNOWN
-                        logger.warning("Level: Tile '{tile}' in '{tilemap_id}' at [{x}, {y}] is missing", tilemap_id=layer_data.tilemap_id, tile=tile, x=x_index, y=y_index)
-
+                for x_index, tile_id in enumerate(row):
+                    tile_obj = self._resolve_tile(tilemap, tile_id)
                     tilemap.place_tile(tile_obj, x_index, y_index, True)
 
     def _build(self, tilemaps: tuple[Tilemap, TilemapLayerData]) -> None:
+        logger.info("Level: '{id}' start building...", id=self._data.id)
         for tilemap, layer_data in tilemaps:
             self._build_tiles(tilemap, layer_data)
         logger.success("Level: '{id}' built successfuly", id=self._data.id)
