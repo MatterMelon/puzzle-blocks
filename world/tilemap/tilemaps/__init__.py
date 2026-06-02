@@ -1,1 +1,1 @@
-from .test_tile_map import TestTileMap
+from .test_tilemap import TestTilemap

@@ -2,10 +2,10 @@ from enum import IntEnum
 
 from ...spritesheet import SpriteSheet
 from ..tile_definition import TileDefinition
-from ..tilemap import TileMap
+from ..tilemap import Tilemap
 
 
-class TestTileMap(TileMap):
+class TestTilemap(Tilemap):
     class TileType(IntEnum):
         UNKNOWN = 0
         GRASS = 1
