@@ -17,7 +17,7 @@ class Level:
         self._tilemap_renderer: TilemapRenderer = TilemapRenderer(data.map_data.tilemap_layers)
 
     def build(self) -> None:
-        logger.info(f"Level: Start building '{self._data.id}")
+        logger.info(f"Level: Start building '{self._data.id}'")
         try:
             self._tilemap_renderer.build()
         except(TilemapError):

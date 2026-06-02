@@ -14,7 +14,7 @@ pg.display.set_caption("PuzzleBlocks")
 font = pg.font.SysFont('Arial', 24)
 clock = pg.time.Clock()
 
-level_data = JsonLevelLoader.load('./data/levels/level_01.json')
+level_data = JsonLevelLoader.load('./data/levels/level_02.json')
 level = Level(level_data)
 level.build()
 

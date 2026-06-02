@@ -53,9 +53,9 @@ class TilemapRenderer:
     def build(self) -> None:
         logger.info("Tilemap: building start")
         for tilemap, layer_data in self._tilemaps:
-            logger.info(f"Tilemap: '{tilemap}' start building...")
+            logger.info(f"Tilemap: Layer '{tilemap}' start building...")
             self._build_tiles(tilemap, layer_data)
-            logger.success(f"Tilemap: '{tilemap}' built successfuly")
+            logger.success(f"Tilemap: Layer '{tilemap}' built successfuly")
         logger.success("Tilemap: Tilemaps built successfuly")
 
     def render(self, surface: Surface) -> None:
