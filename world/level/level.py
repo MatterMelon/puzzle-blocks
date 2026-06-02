@@ -1,7 +1,6 @@
 from loguru import logger
 from pygame import Surface
 
-from config.levels_config import LEVELS_CONFIG
 from world.tilemap.tilemap import Tilemap
 from world.tilemap.tilemap_layer_data import TilemapLayerData
 from world.tilemap.tilemaps.registry import _TILEMAP_REGISTRY
@@ -16,18 +15,21 @@ class Level:
 
         self._data = data
         self._tilemap_layers = data.map_data.tilemap_layers
+        # TODO: Хранить кортежи (Tilemap, TilemapLayerData), как отдельный объект н.п. TilemapLayer
         self._tilemaps = self._instantiate_tilemaps(self._tilemap_layers)
         self._build(self._tilemaps)
 
     def _get_tilemap_class(self, tilemap_id: str) -> type[Tilemap]:
-        cls_name = "".join(map(str.capitalize, tilemap_id.split('_'))) + LEVELS_CONFIG.TILEMAP_SUFFIX
         tilemap_cls = _TILEMAP_REGISTRY.get(tilemap_id.lower())
         if tilemap_cls is None:
-            raise AttributeError(f"Tilemap: {cls_name} not found in registry. Registered: {list(_TILEMAP_REGISTRY)}")
+            raise AttributeError(
+                f"Tilemap: Tilemap with ID '{tilemap_id}' not found in registry. \n"
+                f"Registered: {list(_TILEMAP_REGISTRY)}"
+            )
 
         return tilemap_cls
     
-    def _instantiate_tilemaps(self, tilemap_layers: list[TilemapLayerData]) -> tuple[Tilemap, TilemapLayerData]:
+    def _instantiate_tilemaps(self, tilemap_layers: list[TilemapLayerData]) -> list[tuple[Tilemap, TilemapLayerData]]:
         instances = []
         for layer_data in tilemap_layers:
             tilemap_cls = self._get_tilemap_class(layer_data.tilemap_id)
@@ -51,14 +53,14 @@ class Level:
                     tile = self._resolve_tile(tilemap, tile_id)
                     tilemap.place_tile(tile, x_index, y_index, True)
 
-    def _build(self, tilemaps: tuple[Tilemap, TilemapLayerData]) -> None:
+    def _build(self, tilemaps: list[tuple[Tilemap, TilemapLayerData]]) -> None:
         logger.info("Level: '{id}' start building...", id=self._data.id)
         for tilemap, layer_data in tilemaps:
             self._build_tiles(tilemap, layer_data)
         logger.success("Level: '{id}' built successfuly", id=self._data.id)
 
     def draw(self, surface: Surface) -> None:
-        for tilemap, layer_data in self._tilemaps:
+        for tilemap, _ in self._tilemaps:
             tilemap.draw_tiles(surface)
 
     def update(self, dt: float) -> None:
