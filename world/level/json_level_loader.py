@@ -32,6 +32,9 @@ class JsonLevelLoader(LevelLoader):
                 )
                 logger.success("Level: '{id}' data loaded", id=level_data.id)
                 return level_data
+        except KeyError:
+            logger.exception("Level: Invalid data key")
+            
         except json.JSONDecodeError:
             logger.exception("Level: Data parsing error")
             # raise LevelLoadError
