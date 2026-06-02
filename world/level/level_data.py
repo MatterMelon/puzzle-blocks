@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from level.level_map_data import LevelMapData
+from .level_map_data import LevelMapData
 
 
 @dataclass
