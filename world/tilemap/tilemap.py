@@ -8,7 +8,7 @@ from .tile import Tile
 from .tile_definition import TileDefinition
 
 
-class TileMap:
+class Tilemap:
     def __init__(self, spritesheet: SpriteSheet, tiles_data: dict[int, TileDefinition]):
         self._spritesheet: SpriteSheet = spritesheet
         self._tiles_data: dict[int, TileDefinition] = tiles_data
