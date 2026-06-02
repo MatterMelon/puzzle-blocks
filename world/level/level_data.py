@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 
+from level.level_map_data import LevelMapData
+
 
 @dataclass
 class LevelData:
@@ -7,5 +9,5 @@ class LevelData:
     name: str
     description: str
     goals: list
-    map_data: dict
+    map_data: LevelMapData
     entities: list
