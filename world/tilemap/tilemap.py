@@ -4,6 +4,7 @@ from pygame import Surface
 from pygame.sprite import Group
 
 from ..spritesheet import SpriteSheet
+from .exceptions import MissingTileData
 from .tile import Tile
 from .tile_definition import TileDefinition
 
@@ -40,7 +41,7 @@ class Tilemap:
         td = self._tiles_data.get(id)
 
         if not td: 
-            raise self.MissingTileData(f"Tried to get TileData by ID = {id}")
+            raise MissingTileData(f"Tried to get TileData by ID = {id}")
         
         img = self._spritesheet.get_image(td.frame_x, td.frame_y, td.frame_width, td.frame_height)
         tile = Tile(id, img, td.props)
@@ -59,6 +60,3 @@ class Tilemap:
 
     def draw_tiles(self, surface: Surface) -> None:
         self._tiles.draw(surface)
-
-    class MissingTileData(Exception):
-        pass

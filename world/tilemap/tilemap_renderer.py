@@ -1,6 +1,7 @@
 from loguru import logger
 from pygame import Surface
 
+from .exceptions import MissingTilemapData
 from .tilemap import Tilemap
 from .tilemap_layer import TilemapLayer
 from .tilemap_layer_data import TilemapLayerData
@@ -14,7 +15,7 @@ class TilemapRenderer:
     def _get_tilemap_class(self, tilemap_id: str) -> type[Tilemap]:
         tilemap_cls = _TILEMAP_REGISTRY.get(tilemap_id.lower())
         if tilemap_cls is None:
-            raise AttributeError(
+            raise MissingTilemapData(
                 f"Tilemap: Tilemap with ID '{tilemap_id}' not found in registry. \n"
                 f"Registered: {list(_TILEMAP_REGISTRY)}"
             )

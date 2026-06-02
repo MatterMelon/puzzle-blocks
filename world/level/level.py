@@ -1,8 +1,10 @@
 from loguru import logger
 from pygame import Surface
 
+from world.tilemap.exceptions import TilemapError
 from world.tilemap.tilemap_renderer import TilemapRenderer
 
+from .exceptions import LevelError
 from .level_data import LevelData
 
 
@@ -16,7 +18,12 @@ class Level:
 
     def build(self) -> None:
         logger.info(f"Level: Start building '{self._data.id}")
-        self._tilemap_renderer.build()
+        try:
+            self._tilemap_renderer.build()
+        except(TilemapError):
+            logger.exception(f"Level: Error occured on building a tilemap for '{self._data.id}' ")
+            raise LevelError()
+        logger.success(f"Level: '{self._data.id}' built successfully")
 
     def draw(self, surface: Surface) -> None:
         self._tilemap_renderer.render(surface)
