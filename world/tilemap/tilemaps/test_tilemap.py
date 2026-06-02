@@ -3,8 +3,10 @@ from enum import IntEnum
 from ...spritesheet import SpriteSheet
 from ..tile_definition import TileDefinition
 from ..tilemap import Tilemap
+from .registry import register_tilemap
 
 
+@register_tilemap
 class TestTilemap(Tilemap):
     class TileType(IntEnum):
         UNKNOWN = 0

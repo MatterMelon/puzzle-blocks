@@ -1,14 +1,13 @@
 from loguru import logger
 from pygame import Surface
 
-import world.tilemap.tilemaps as tilemaps
-from world.tilemap.tile import Tile
+from config.levels_config import LEVELS_CONFIG
 from world.tilemap.tilemap import Tilemap
 from world.tilemap.tilemap_layer_data import TilemapLayerData
+from world.tilemap.tilemaps.registry import _TILEMAP_REGISTRY
 
 from .level_data import LevelData
 
-TILEMAP_NAME_SUFFIX = "Tilemap"
 
 class Level:
     def __init__(self, data: LevelData):
@@ -20,39 +19,37 @@ class Level:
         self._tilemaps = self._instantiate_tilemaps(self._tilemap_layers)
         self._build(self._tilemaps)
 
-    def _get_tilemap_class(self, tilemap_id):
-        cls_name = "".join(map(str.capitalize, tilemap_id.split('_'))) + TILEMAP_NAME_SUFFIX
-        tilemap_cls = getattr(tilemaps, cls_name, None)
+    def _get_tilemap_class(self, tilemap_id: str) -> type[Tilemap]:
+        cls_name = "".join(map(str.capitalize, tilemap_id.split('_'))) + LEVELS_CONFIG.TILEMAP_SUFFIX
+        tilemap_cls = _TILEMAP_REGISTRY.get(tilemap_id.lower())
         if tilemap_cls is None:
-            raise AttributeError(f"Tilemap: {cls_name} not found")
+            raise AttributeError(f"Tilemap: {cls_name} not found in registry. Registered: {list(_TILEMAP_REGISTRY)}")
 
         return tilemap_cls
     
     def _instantiate_tilemaps(self, tilemap_layers: list[TilemapLayerData]) -> tuple[Tilemap, TilemapLayerData]:
-        return [
-                (
-                    self._get_tilemap_class(layer_data.tilemap_id)(),
-                    layer_data
-                )
-                for layer_data in tilemap_layers
-        ]
+        instances = []
+        for layer_data in tilemap_layers:
+            tilemap_cls = self._get_tilemap_class(layer_data.tilemap_id)
+            instances.append((tilemap_cls(), layer_data))
+
+        return instances
     
-    def _resolve_tile(self, tilemap: Tilemap, tile_id: str) -> Tile:
+    def _resolve_tile(self, tilemap: Tilemap, tile_id: str) -> int:
         try: 
             return tilemap.TileType[tile_id]
         except(KeyError):
+            logger.warning("Level: Missing tile '{tile}' in Tilemap: '{tilemap}'", tilemap=tilemap, tile=tile_id)
             # TODO: Добавить тайлмап для текстуры UNKNOWN.
             #       Сейчас она берется из самого тайлмапа с ошибкой.
-            logger.warning("Level: Missing tile '{tile}' in Tilemap: '{tilemap}'", tilemap=tilemap, tile=tile_id)
             return tilemap.TileType.UNKNOWN
-
 
     def _build_tiles(self, tilemap: Tilemap, layer_data: TilemapLayerData) -> None:
             tiles = layer_data.tiles
             for y_index, row in enumerate(tiles):
                 for x_index, tile_id in enumerate(row):
-                    tile_obj = self._resolve_tile(tilemap, tile_id)
-                    tilemap.place_tile(tile_obj, x_index, y_index, True)
+                    tile = self._resolve_tile(tilemap, tile_id)
+                    tilemap.place_tile(tile, x_index, y_index, True)
 
     def _build(self, tilemaps: tuple[Tilemap, TilemapLayerData]) -> None:
         logger.info("Level: '{id}' start building...", id=self._data.id)
