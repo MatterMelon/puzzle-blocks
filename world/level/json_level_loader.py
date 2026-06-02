@@ -1,10 +1,12 @@
 import json
 
-from level.level_map_data import LevelMapData
 from loguru import logger
+
+from world.tilemap.tilemap_layer_data import TilemapLayerData
 
 from .level_data import LevelData
 from .level_loader import LevelLoader
+from .level_map_data import LevelMapData
 
 
 class JsonLevelLoader(LevelLoader):
@@ -21,7 +23,10 @@ class JsonLevelLoader(LevelLoader):
                     LevelMapData(
                         data['map']['width'],
                         data['map']['height'],
-                        data['map']['tiles'],
+                        [
+                            TilemapLayerData(str.strip(layer['tilemap_id']), layer['tiles']) 
+                            for layer in data['map']['tilemap_layers']
+                        ]
                     ),
                     data['entities']
                 )
