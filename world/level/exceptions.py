@@ -1,2 +1,2 @@
-class LevelError:
+class LevelError(Exception):
     pass

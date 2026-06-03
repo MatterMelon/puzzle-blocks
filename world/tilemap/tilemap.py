@@ -1,6 +1,5 @@
 from enum import IntEnum
 
-from pygame import Surface
 from pygame.sprite import Group
 
 from ..spritesheet import SpriteSheet
@@ -58,5 +57,8 @@ class Tilemap:
     def delete_tile(self) -> None:
         pass
 
-    def draw_tiles(self, surface: Surface) -> None:
-        self._tiles.draw(surface)
+    def get_tiles(self) -> Group:
+        return self._tiles
+
+    # def draw_tiles(self, surface: Surface) -> None:
+    #     self._tiles.draw(surface)

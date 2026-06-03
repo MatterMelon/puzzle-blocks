@@ -3,6 +3,7 @@ import sys
 import pygame as pg
 
 from core.logging.logger_config import configure_logging
+from world.level.exceptions import LevelError
 from world.level.json_level_loader import JsonLevelLoader
 from world.level.level import Level
 
@@ -16,7 +17,13 @@ font = pg.font.SysFont('Arial', 24)
 clock = pg.time.Clock()
 configure_logging()
 
-level_data = JsonLevelLoader.load('./data/levels/level_02.json')
+level_data = None
+
+try:
+    level_data = JsonLevelLoader.load('./data/levels/level_02.json')
+except LevelError:
+    pass
+
 level = Level(level_data)
 level.build()
 

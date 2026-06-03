@@ -2,6 +2,7 @@ import json
 
 from core.logging.logger import get_logger
 from core.logging.loggger_domain import LoggerDomain
+from world.level.exceptions import LevelError
 from world.tilemap.tilemap_layer_data import TilemapLayerData
 
 from .level_data import LevelData
@@ -31,11 +32,28 @@ class JsonLevelLoader(LevelLoader):
                     ),
                     data['entities']
                 )
-                logger.success("Level: '{id}' data loaded", id=level_data.id)
+                logger.success("'{id}' data loaded", id=level_data.id)
                 return level_data
-        except KeyError:
-            logger.exception("Level: Invalid data key")
             
-        except json.JSONDecodeError:
-            logger.exception("Level: Data parsing error")
-            # raise LevelLoadError
+        except(KeyError, json.JSONDecodeError, FileNotFoundError) as e:
+            messages = {
+                KeyError: "Invalid data key",
+                json.JSONDecodeError: "Data parsing error",
+                FileNotFoundError: "Data file not found"
+            }
+
+            logger.exception(messages[type(e)])
+            raise LevelError("Error occured while loading a level")
+            
+
+        # except KeyError:
+        #     logger.exception("Invalid data key")
+        #     raise LevelError("Error occured while loading a level")
+            
+        # except json.JSONDecodeError:
+        #     logger.exception("Data parsing error")
+        #     raise LevelError("Error occured while loading a level")
+        
+        # except FileNotFoundError:
+        #     logger.exception("Data file not found")
+        #     raise LevelError("Error occured while loading a level")

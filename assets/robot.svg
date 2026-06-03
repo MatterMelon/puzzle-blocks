@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="33.0728mm" height="33.0728mm" version="1.1" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd"
+viewBox="0 0 3307.28 3307.28"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:xodm="http://www.corel.com/coreldraw/odm/2003">
+ <defs>
+    <radialGradient id="id0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1 -0 -0 1 0 0)" cx="2112.41" cy="1476.1" r="202.32" fx="2112.41" fy="1476.1">
+     <stop offset="0" stop-opacity="1" stop-color="white"/>
+     <stop offset="1" stop-opacity="1" stop-color="#C9C060"/>
+    </radialGradient>
+    <radialGradient id="id1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1 -0 -0 1 0 0)" cx="2112.41" cy="1476.1" r="202.32" fx="2112.41" fy="1476.1">
+     <stop offset="0" stop-opacity="1" stop-color="white"/>
+     <stop offset="1" stop-opacity="1" stop-color="#C9C060"/>
+    </radialGradient>
+    <radialGradient id="id2" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1 -0 -0 1 0 0)" cx="1187.35" cy="1476.1" r="202.32" fx="1187.35" fy="1476.1">
+     <stop offset="0" stop-opacity="1" stop-color="white"/>
+     <stop offset="1" stop-opacity="1" stop-color="#C9C060"/>
+    </radialGradient>
+    <radialGradient id="id3" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1 -0 -0 0.50002 0 320)" cx="1640.42" cy="639.5" r="249.97" fx="1640.42" fy="639.5">
+     <stop offset="0" stop-opacity="1" stop-color="white"/>
+     <stop offset="1" stop-opacity="1" stop-color="#B93600"/>
+    </radialGradient>
+ </defs>
+ <g id="Слой_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <g id="_2207220613024">
+   <rect fill="#3BB900" stroke="#466936" stroke-width="132.29" stroke-miterlimit="22.9256" x="657.99" y="854.37" width="1964.85" height="1964.85" rx="264.58" ry="264.58"/>
+   <circle fill="#C9C060" stroke="#B9A920" stroke-width="52.92" stroke-miterlimit="22.9256" cx="2112.41" cy="1476.1" r="324.18"/>
+   <rect fill="#949494" stroke="#466936" stroke-width="52.92" stroke-miterlimit="22.9256" x="863.17" y="2085.38" width="1556.03" height="550.66" rx="132.29" ry="200.71"/>
+   <circle fill="url(#id0)" stroke="#B9A920" stroke-width="52.92" stroke-miterlimit="22.9256" cx="2112.41" cy="1476.1" r="324.18"/>
+   <circle fill="url(#id1)" stroke="#B9A920" stroke-width="52.92" stroke-miterlimit="22.9256" cx="2112.41" cy="1476.1" r="324.18"/>
+   <circle fill="url(#id2)" stroke="#B9A920" stroke-width="52.92" stroke-miterlimit="22.9256" cx="1187.35" cy="1476.1" r="324.18"/>
+   <path fill="url(#id3)" stroke="#B90000" stroke-width="52.92" stroke-miterlimit="22.9256" d="M1640.42 764.48l249.97 0c0,-138.05 -111.92,-249.97 -249.97,-249.97 -138.05,0 -249.97,111.92 -249.97,249.97l249.97 0z"/>
+   <g>
+    <rect fill="#B0B0B0" x="1061.07" y="2110.12" width="108.25" height="494.83"/>
+    <rect fill="#B0B0B0" x="1326.52" y="2112.72" width="108.25" height="494.83"/>
+    <rect fill="#B0B0B0" x="1591.97" y="2115.32" width="108.25" height="494.83"/>
+    <rect fill="#B0B0B0" x="1857.42" y="2117.92" width="108.25" height="494.83"/>
+    <rect fill="#B0B0B0" x="2122.87" y="2120.52" width="108.25" height="494.83"/>
+   </g>
+  </g>
+ </g>
+</svg>
