@@ -3,6 +3,7 @@ import sys
 import pygame as pg
 
 from core.logging.logger_config import configure_logging
+from world.entity.player import Player
 from world.level.exceptions import LevelError
 from world.level.json_level_loader import JsonLevelLoader
 from world.level.level import Level
@@ -27,13 +28,21 @@ except LevelError:
 level = Level(level_data)
 level.build()
 
+player_sprite = pg.image.load_sized_svg("./assets/robot.svg", (16, 16))
+player = Player(player_sprite, 16, 16)
+
+entities = pg.sprite.LayeredUpdates()
+entities.add(player)
+
 while True:
     for e in pg.event.get():
         if e.type == pg.QUIT:
             pg.quit()
             sys.exit()
+        player.handle_event(e)
             
     screen.fill(pg.Color(255,255,255))
     level.draw(screen)
+    entities.draw(screen)
     pg.display.flip()
     clock.tick(60)

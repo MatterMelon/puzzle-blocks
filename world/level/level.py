@@ -23,7 +23,6 @@ class Level:
         logger.info(f"Start building '{self._data.id}'")
         try:
             self._tilemap = self._tilemap_builder.build()
-            # self._tilemap_builder.build()
         except(TilemapError):
             logger.exception(f"Error occured on building a tilemap for '{self._data.id}' ")
             raise LevelError()
@@ -31,7 +30,6 @@ class Level:
 
     def draw(self, surface: Surface) -> None:
         self._tilemap.draw(surface)
-        # self._tilemap_builder.render(surface)
 
     def update(self, dt: float) -> None:
         pass
