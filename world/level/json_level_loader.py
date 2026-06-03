@@ -1,13 +1,14 @@
 import json
 
-from loguru import logger
-
+from core.logging.logger import get_logger
+from core.logging.loggger_domain import LoggerDomain
 from world.tilemap.tilemap_layer_data import TilemapLayerData
 
 from .level_data import LevelData
 from .level_loader import LevelLoader
 from .level_map_data import LevelMapData
 
+logger = get_logger(LoggerDomain.LEVEL)
 
 class JsonLevelLoader(LevelLoader):
     @staticmethod

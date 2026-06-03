@@ -1,5 +1,6 @@
-from loguru import logger
 from pygame import Surface
+
+from core.logging.logger import LoggerDomain, get_logger
 
 from .exceptions import MissingTilemapData
 from .tilemap import Tilemap
@@ -7,6 +8,7 @@ from .tilemap_layer import TilemapLayer
 from .tilemap_layer_data import TilemapLayerData
 from .tilemaps.registry import _TILEMAP_REGISTRY
 
+logger = get_logger(LoggerDomain.TILEMAP)
 
 class TilemapRenderer:
     def __init__(self, tilemap_layers_data: list[TilemapLayerData]):

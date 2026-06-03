@@ -2,6 +2,7 @@ import sys
 
 import pygame as pg
 
+from core.logging.logger_config import configure_logging
 from world.level.json_level_loader import JsonLevelLoader
 from world.level.level import Level
 
@@ -13,6 +14,7 @@ screen = pg.display.set_mode(WINDOW_SIZE)
 pg.display.set_caption("PuzzleBlocks")
 font = pg.font.SysFont('Arial', 24)
 clock = pg.time.Clock()
+configure_logging()
 
 level_data = JsonLevelLoader.load('./data/levels/level_02.json')
 level = Level(level_data)
