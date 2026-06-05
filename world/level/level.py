@@ -2,6 +2,8 @@ import pygame as pg
 from pygame import Event, Surface
 from pygame.sprite import RenderUpdates
 
+from commands.command import Command
+from controllers.keyboard_controller import KeyboardController
 from core.logging.logger import LoggerDomain, get_logger
 from world.entity.player import Player
 from world.tilemap.exceptions import TilemapError
@@ -20,8 +22,11 @@ class Level:
         self._data = data
         self._tilemap_builder: TilemapBuilder = TilemapBuilder(data.map_data.tilemap_layers)
         self._tilemap: RenderUpdates
+        self._player = Player(16, 16)
+        self._player_controller = KeyboardController(self._player)
         self._entities = pg.sprite.LayeredUpdates()
-        self._entities.add(Player(16, 16))
+        self._entities.add(self._player)
+        self._command: Command = None
 
 
     def build(self) -> None:
@@ -38,8 +43,11 @@ class Level:
         self._entities.draw(surface)
 
     def handle_event(self, e: Event):
-        for entity in self._entities:
-            entity.handle_event(e)
+        command = self._player_controller.get_command(e)
+        if command:
+            command.execute()
+        # for entity in self._entities:
+        #     entity.handle_event(e)
 
     def update(self) -> None:
         self._entities.update()
