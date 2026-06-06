@@ -2,15 +2,17 @@ import pygame as pg
 from pygame import Event
 from pygame.sprite import Sprite
 
+from world.entity.actions.action import Action
+
 
 class Entity(Sprite):
     def __init__(self, *groups):
         super().__init__(*groups)
-        self.image = pg.Surface((0, 0))
-        self.rect = self.image.get_rect()
-        self.action = None
+        self.image: pg.Surface = pg.Surface((0, 0))
+        self.rect: pg.Rect = self.image.get_rect()
+        self.action: Action | None = None
     
-    def get_action(self):
+    def get_action(self) -> Action | None:
         action = self.action
         self.action = None
         return action
