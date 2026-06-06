@@ -1,5 +1,5 @@
 
-from pygame.sprite import RenderUpdates
+from pygame.sprite import Group, RenderUpdates
 
 from core.logging.logger import LoggerDomain, get_logger
 
@@ -14,6 +14,7 @@ logger = get_logger(LoggerDomain.TILEMAP)
 class TilemapBuilder:
     def __init__(self, tilemap_layers_data: list[TilemapLayerData]):
         self._tilemaps: list[TilemapLayer] = self._instantiate_tilemaps(tilemap_layers_data)
+        self.collision: Group = Group()
 
     def _get_tilemap_class(self, tilemap_id: str) -> type[Tilemap]:
         tilemap_cls = _TILEMAP_REGISTRY.get(tilemap_id.lower())
@@ -52,7 +53,7 @@ class TilemapBuilder:
                 for x_index, tile_id in enumerate(row):
                     tile = self._resolve_tile(tilemap, tile_id)
                     tilemap.place_tile(tile, x_index, y_index, True)
-
+            self.collision = tilemap.collision
     def build(self) -> RenderUpdates:
         built_tilemap = RenderUpdates()
         logger.info("Start building...")

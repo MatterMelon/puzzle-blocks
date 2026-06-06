@@ -16,7 +16,6 @@ class KeyboardController(Controller):
     def get_command(self, e: pg.Event) -> Command | None:
         if e.type == pg.KEYDOWN:
             keyname = pg.key.name(e.key)
-            print(keyname)
             match keyname:
                 case 'up':
                     return MoveCommand(self._entity, 0, -1 * self._step)

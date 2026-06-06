@@ -1,3 +1,4 @@
+from world.entity.actions.move_action import MoveAction
 from world.entity.entity import Entity
 
 from .command import Command
@@ -11,4 +12,4 @@ class MoveCommand(Command):
         self._dy = dy
     
     def execute(self) -> None:
-        self._entity.move_to(self._dx, self._dy)
+        self._entity.action = MoveAction(self._dx, self._dy)

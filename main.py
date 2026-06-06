@@ -6,6 +6,7 @@ from core.logging.logger_config import configure_logging
 from world.level.exceptions import LevelError
 from world.level.json_level_loader import JsonLevelLoader
 from world.level.level import Level
+from world.level.level_data import LevelData
 
 pg.init()
 pg.font.init()
@@ -17,7 +18,7 @@ font = pg.font.SysFont('Arial', 24)
 clock = pg.time.Clock()
 configure_logging()
 
-level_data = None
+level_data: LevelData | None = None
 
 try:
     level_data = JsonLevelLoader.load('./data/levels/level_02.json')
