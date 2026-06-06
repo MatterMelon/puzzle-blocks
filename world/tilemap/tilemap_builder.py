@@ -1,5 +1,7 @@
-from loguru import logger
-from pygame import Surface
+
+from pygame.sprite import Group, RenderUpdates
+
+from core.logging.logger import LoggerDomain, get_logger
 
 from .exceptions import MissingTilemapData
 from .tilemap import Tilemap
@@ -7,16 +9,18 @@ from .tilemap_layer import TilemapLayer
 from .tilemap_layer_data import TilemapLayerData
 from .tilemaps.registry import _TILEMAP_REGISTRY
 
+logger = get_logger(LoggerDomain.TILEMAP)
 
-class TilemapRenderer:
+class TilemapBuilder:
     def __init__(self, tilemap_layers_data: list[TilemapLayerData]):
         self._tilemaps: list[TilemapLayer] = self._instantiate_tilemaps(tilemap_layers_data)
+        self.collision: Group = Group()
 
     def _get_tilemap_class(self, tilemap_id: str) -> type[Tilemap]:
         tilemap_cls = _TILEMAP_REGISTRY.get(tilemap_id.lower())
         if tilemap_cls is None:
             raise MissingTilemapData(
-                f"Tilemap: Tilemap with ID '{tilemap_id}' not found in registry. \n"
+                f"Tilemap with ID '{tilemap_id}' not found in registry. \n"
                 f"Registered: {list(_TILEMAP_REGISTRY)}"
             )
 
@@ -35,7 +39,7 @@ class TilemapRenderer:
             return tilemap.TileType[tile_id]
         except(KeyError):
             logger.warning(
-                F"Tilemap: Missing tile ID:'{tile_id}' in '{tilemap}' \n"
+                F"Missing tile ID:'{tile_id}' in '{tilemap}' \n"
                 "Replacing with 'UNKNOWN'"
             )
             
@@ -49,15 +53,15 @@ class TilemapRenderer:
                 for x_index, tile_id in enumerate(row):
                     tile = self._resolve_tile(tilemap, tile_id)
                     tilemap.place_tile(tile, x_index, y_index, True)
-
-    def build(self) -> None:
-        logger.info("Tilemap: building start")
+            self.collision = tilemap.collision
+    def build(self) -> RenderUpdates:
+        built_tilemap = RenderUpdates()
+        logger.info("Start building...")
         for tilemap, layer_data in self._tilemaps:
-            logger.info(f"Tilemap: Layer '{tilemap}' start building...")
+            logger.info(f"Layer '{tilemap}' start building...")
             self._build_tiles(tilemap, layer_data)
-            logger.success(f"Tilemap: Layer '{tilemap}' built successfuly")
-        logger.success("Tilemap: Tilemaps built successfuly")
+            built_tilemap.add(tilemap.get_tiles())
+            logger.success(f"Layer '{tilemap}' built successfuly")
+        logger.success("Tilemaps built successfuly")
 
-    def render(self, surface: Surface) -> None:
-        for tilemap, _ in self._tilemaps:
-            tilemap.draw_tiles(surface)
+        return built_tilemap

@@ -1,6 +1,5 @@
 from enum import IntEnum
 
-from pygame import Surface
 from pygame.sprite import Group
 
 from ..spritesheet import SpriteSheet
@@ -14,6 +13,7 @@ class Tilemap:
         self._spritesheet: SpriteSheet = spritesheet
         self._tiles_data: dict[int, TileDefinition] = tiles_data
         self._tiles: Group = Group()
+        self.collision: Group = Group()
     
     def __init_subclass__(cls):
         super().__init_subclass__()
@@ -55,8 +55,9 @@ class Tilemap:
             
         self._tiles.add(tile)
 
+        # Collision
+        if td.props.get('collision'):
+            self.collision.add(tile)
+
     def delete_tile(self) -> None:
         pass
-
-    def draw_tiles(self, surface: Surface) -> None:
-        self._tiles.draw(surface)
