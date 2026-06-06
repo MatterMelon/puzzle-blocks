@@ -13,7 +13,7 @@ from world.tilemap.tilemap_builder import TilemapBuilder
 
 from world.level.exceptions import LevelError
 from world.level.level_data import LevelData
-from ..tilemap import tilemap_builder
+from world.level.collision_resolver import CollisionResolver
 
 logger = get_logger(LoggerDomain.LEVEL)
 
@@ -25,7 +25,8 @@ class Level:
         self._data = data
         self._tilemap_builder: TilemapBuilder = TilemapBuilder(data.map_data.tilemap_layers)
         self._tilemap: RenderUpdates
-        self.collision_group: Group = Group()
+        # self.collision_group: Group = Group()
+        self.collision_resolver: CollisionResolver = CollisionResolver(self._tilemap_builder.collision)
         self._player = Player(16, 16)
         self._player_controller = KeyboardController(self._player)
         self._entities = pg.sprite.LayeredUpdates()
@@ -37,7 +38,7 @@ class Level:
         logger.info(f"Start building '{self._data.id}'")
         try:
             self._tilemap = self._tilemap_builder.build()
-            self.collision_group = self._tilemap_builder.collision
+            self.collision_resolver.update_collision(self._tilemap_builder.collision)
             print(f"Collision: {self._tilemap_builder.collision}")
         except(TilemapError):
             logger.exception(f"Error occured on building a tilemap for '{self._data.id}' ")
@@ -55,25 +56,12 @@ class Level:
         # for entity in self._entities:
         #     entity.handle_event(e)
 
-    def _entity_can_move(self, entity: Entity, dx: int, dy: int) -> bool:
-        if entity is None:
-            return False
-
-        moved_rect = entity.rect.move(dx, dy)
-
-        for collider in self.collision_group:
-            if moved_rect.colliderect(collider.rect):
-                logger.info(f"Entity: {entity} collided with {collider}")
-                return False
-
-        return True
-
     def update(self) -> None:
         entity: Entity
         for entity in self._entities:
             action = entity.get_action()
             if action:
                 if isinstance(action, MoveAction):
-                    if self._entity_can_move(entity, action.dx, action.dy):
+                    if self.collision_resolver.can_move(entity, action.dx, action.dy):
                         entity.move_to(action.dx, action.dy)
-        # self._entities.update()
+            entity.update()
