@@ -8,6 +8,7 @@ from world.tilemap.tilemap_layer_data import TilemapLayerData
 from .level_data import LevelData
 from .level_loader import LevelLoader
 from .level_map_data import LevelMapData
+from ..entity.entity_data import EntityData
 
 logger = get_logger(LoggerDomain.LEVEL)
 
@@ -21,7 +22,7 @@ class JsonLevelLoader(LevelLoader):
                     str.strip(data['id']),
                     str.strip(data['name']),
                     str.strip(data['description']),
-                    data['goals'],
+                    data['goals'], # TODO: Добавить тип для целей
                     LevelMapData(
                         data['map']['width'],
                         data['map']['height'],
@@ -30,7 +31,10 @@ class JsonLevelLoader(LevelLoader):
                             for layer in data['map']['tilemap_layers']
                         ]
                     ),
-                    data['entities']
+                    [
+                        EntityData(entity['type'], entity['name'], entity['x'], entity['y'])
+                        for entity in data['entities']
+                    ]
                 )
                 logger.success("'{id}' data loaded", id=level_data.id)
                 return level_data
