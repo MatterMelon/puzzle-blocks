@@ -3,6 +3,7 @@ from pygame import Event, Surface
 from pygame.sprite import Group, RenderUpdates
 
 from commands.command import Command
+from controllers.controller import Controller
 from controllers.keyboard_controller import KeyboardController
 from core.logging.logger import LoggerDomain, get_logger
 from world.entity.actions.move_action import MoveAction
@@ -22,16 +23,15 @@ class Level:
         super().__init__()
         if data is None:
             raise ValueError("Cannot build a level with None data")
-        self._data = data
+        self._data: LevelData = data
         self._tilemap_builder: TilemapBuilder = TilemapBuilder(data.map_data.tilemap_layers)
         self._tilemap: RenderUpdates
-        # self.collision_group: Group = Group()
         self.collision_resolver: CollisionResolver = CollisionResolver(self._tilemap_builder.collision)
-        self._player = Player(16, 16)
-        self._player_controller = KeyboardController(self._player)
+        self._player: Player = Player(16, 16)
+        self._player_controller: Controller = KeyboardController(self._player)
         self._entities = pg.sprite.LayeredUpdates()
         self._entities.add(self._player)
-        self._command: Command = None
+        self._command: Command | None = None
 
 
     def build(self) -> None:
@@ -49,12 +49,10 @@ class Level:
         self._tilemap.draw(surface)
         self._entities.draw(surface)
 
-    def handle_event(self, e: Event):
+    def handle_event(self, e: Event) -> None:
         command = self._player_controller.get_command(e)
         if command:
             command.execute()
-        # for entity in self._entities:
-        #     entity.handle_event(e)
 
     def update(self) -> None:
         entity: Entity

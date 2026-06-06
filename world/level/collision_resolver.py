@@ -10,10 +10,10 @@ class CollisionResolver:
     def __init__(self, collision_group):
         self.collision_group: Group = collision_group
 
-    def update_collision(self, collision_group: Group):
+    def update_collision(self, collision_group: Group) -> None:
         self.collision_group = collision_group
 
-    def can_move(self, entity: Entity, dx, dy):
+    def can_move(self, entity: Entity, dx: int, dy: int) -> bool:
         if entity is None:
             return False
 
