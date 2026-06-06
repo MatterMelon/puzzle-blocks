@@ -5,11 +5,11 @@ from core.logging.logger import LoggerDomain, get_logger
 from world.entity.actions.action import Action
 from world.entity.actions.move_action import MoveAction
 
-from .controller import Controller
+from controllers.entity_controller import EntityController
 
 logger = get_logger(LoggerDomain.CONTROLLER)
 
-class KeyboardController(Controller):
+class KeyboardController(EntityController):
     def __init__(self, entity):
         super().__init__(entity)
 

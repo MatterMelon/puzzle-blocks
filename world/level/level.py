@@ -3,7 +3,7 @@ from pygame import Event, Surface
 from pygame.sprite import Group, RenderUpdates
 
 from controllers.controller import Controller
-from controllers.keyboard_controller import KeyboardController
+from controllers.entity_keyboard_controller import KeyboardController
 from core.logging.logger import LoggerDomain, get_logger
 from world.entity.actions.move_action import MoveAction
 from world.entity.entity import Entity
