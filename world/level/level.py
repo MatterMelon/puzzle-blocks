@@ -5,6 +5,7 @@ from pygame.sprite import Group, RenderUpdates
 from controllers.controller import Controller
 from controllers.entity_keyboard_controller import KeyboardController
 from core.logging.logger import LoggerDomain, get_logger
+from world.entity.actions.action import Action
 from world.entity.actions.move_action import MoveAction
 from world.entity.entity import Entity
 from world.entity.player import Player
@@ -30,7 +31,7 @@ class Level:
         self._player_controller: Controller = KeyboardController(self._player)
         self._entities = pg.sprite.LayeredUpdates()
         self._entities.add(self._player)
-        self._command: Command | None = None
+        self._action: Action | None = None
 
 
     def build(self) -> None:

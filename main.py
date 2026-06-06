@@ -5,7 +5,8 @@ import pygame as pg
 from config.game_config import GameConfig
 from core.logging.logger_config import configure_logging
 from world.level.exceptions import LevelError
-from world.level.json_level_loader import JsonLevelLoader
+from world.level.level_loader.level_loader import LevelLoader
+from world.level.level_loader.json_level_loader import JsonLevelLoader
 from world.level.level import Level
 from world.level.level_data import LevelData
 
@@ -20,8 +21,10 @@ configure_logging()
 
 level_data: LevelData | None = None
 
+level_loader: LevelLoader = JsonLevelLoader('./data/levels/level_02.json')
+
 try:
-    level_data = JsonLevelLoader.load('./data/levels/level_02.json')
+    level_data = level_loader.load()
 except LevelError:
     pass
 
