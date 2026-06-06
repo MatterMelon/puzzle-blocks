@@ -2,6 +2,7 @@ import sys
 
 import pygame as pg
 
+from config.game_config import GameConfig
 from core.logging.logger_config import configure_logging
 from world.level.exceptions import LevelError
 from world.level.json_level_loader import JsonLevelLoader
@@ -11,10 +12,9 @@ from world.level.level_data import LevelData
 pg.init()
 pg.font.init()
 
-WINDOW_SIZE = (800, 600)
-screen = pg.display.set_mode(WINDOW_SIZE)
-pg.display.set_caption("PuzzleBlocks")
-font = pg.font.SysFont('Arial', 24)
+screen = pg.display.set_mode((GameConfig.WINDOW_WIDTH, GameConfig.WINDOW_HEIGHT))
+pg.display.set_caption(GameConfig.GAME_NAME)
+font = pg.font.SysFont(GameConfig.FONT_FAMILY, GameConfig.FONT_SIZE)
 clock = pg.time.Clock()
 configure_logging()
 
