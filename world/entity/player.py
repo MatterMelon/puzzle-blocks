@@ -1,6 +1,7 @@
 import pygame as pg
 from pygame import Event
 
+from config.game_config import GameConfig
 from .entity import Entity
 
 
@@ -11,7 +12,7 @@ class Player(Entity):
         self.rect: pg.Rect = self.image.get_rect()
         self.rect.x = pos_x
         self.rect.y = pos_y
-        self._step = 16
+        self._step = GameConfig.GRID_SIZE
     
     def handle_event(self, e: Event) -> None:
         pass
