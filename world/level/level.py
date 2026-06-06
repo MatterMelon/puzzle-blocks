@@ -2,7 +2,6 @@ import pygame as pg
 from pygame import Event, Surface
 from pygame.sprite import Group, RenderUpdates
 
-from commands.command import Command
 from controllers.controller import Controller
 from controllers.keyboard_controller import KeyboardController
 from core.logging.logger import LoggerDomain, get_logger
@@ -50,9 +49,9 @@ class Level:
         self._entities.draw(surface)
 
     def handle_event(self, e: Event) -> None:
-        command = self._player_controller.get_command(e)
-        if command:
-            command.execute()
+        action = self._player_controller.get_action(e)
+        if action:
+            self._player.action = action
 
     def update(self) -> None:
         entity: Entity
