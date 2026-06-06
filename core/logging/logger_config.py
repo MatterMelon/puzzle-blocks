@@ -10,7 +10,8 @@ LOG_FORMAT = (
     "<level>{message}</level>"
 )
 
-def configure_logging():
+
+def configure_logging() -> None:
     logger.remove()
     logger.configure(extra={"domain": "GLOBAL"})
     logger.add(

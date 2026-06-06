@@ -15,18 +15,6 @@ class Player(Entity):
     
     def handle_event(self, e: Event) -> None:
         pass
-        # if e.type == pg.KEYDOWN:
-        #     keyname = pg.key.name(e.key)
-        #     print(keyname)
-        #     match keyname:
-        #         case 'up':
-        #             self.rect.y -= self._step
-        #         case 'right':
-        #             self.rect.x += self._step
-        #         case 'down':
-        #             self.rect.y += self._step
-        #         case 'left':
-        #             self.rect.x -= self._step
 
     def update(self) -> None:
         pass

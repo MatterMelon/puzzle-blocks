@@ -11,5 +11,5 @@ class Controller(ABC):
         self._entity = entity
     
     @abstractmethod
-    def get_command(self, e: Event) -> Command:
+    def get_command(self, e: Event) -> Command | None:
         pass
