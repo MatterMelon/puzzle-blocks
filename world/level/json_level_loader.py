@@ -5,10 +5,10 @@ from core.logging.loggger_domain import LoggerDomain
 from world.level.exceptions import LevelError
 from world.tilemap.tilemap_layer_data import TilemapLayerData
 
-from .level_data import LevelData
-from .level_loader import LevelLoader
-from .level_map_data import LevelMapData
-from ..entity.entity_data import EntityData
+from world.level.level_data import LevelData
+from world.level.level_loader import LevelLoader
+from world.level.level_map_data import LevelMapData
+from world.entity.entity_data import EntityData
 
 logger = get_logger(LoggerDomain.LEVEL)
 

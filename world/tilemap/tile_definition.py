@@ -1,5 +1,7 @@
 from dataclasses import dataclass, field
 
+from world.tilemap.tile_properties import TileProperties
+
 
 @dataclass
 class TileDefinition:
@@ -8,4 +10,4 @@ class TileDefinition:
     frame_y: int
     frame_width: int = 1
     frame_height: int = 1
-    props: dict = field(default_factory=dict)
+    props: TileProperties | None = None

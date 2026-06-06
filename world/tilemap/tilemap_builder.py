@@ -54,6 +54,7 @@ class TilemapBuilder:
                     tile = self._resolve_tile(tilemap, tile_id)
                     tilemap.place_tile(tile, x_index, y_index, True)
             self.collision.add(tilemap.collision)
+
     def build(self) -> RenderUpdates:
         built_tilemap = RenderUpdates()
         logger.info("Start building...")

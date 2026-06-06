@@ -1,5 +1,6 @@
 from enum import IntEnum
 
+from ..tile_properties import TileProperties
 from ...spritesheet import SpriteSheet
 from ..tile_definition import TileDefinition
 from ..tilemap import Tilemap
@@ -18,6 +19,6 @@ class TestTilemap(Tilemap):
         tiles_data = {
             self.TileType.UNKNOWN: TileDefinition('unknown', 0, 0),
             self.TileType.GRASS: TileDefinition('grass', 1, 0), 
-            self.TileType.WALL: TileDefinition('wall', 2, 0, 1, 1, {'collision': True})
+            self.TileType.WALL: TileDefinition('wall', 2, 0, 1, 1, TileProperties(collision=True))
         }
         super().__init__(spritesheet, tiles_data)

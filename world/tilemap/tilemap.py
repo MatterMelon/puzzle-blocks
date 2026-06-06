@@ -56,7 +56,7 @@ class Tilemap:
         self._tiles.add(tile)
 
         # Collision
-        if td.props.get('collision'):
+        if td.props and td.props.collision:
             self.collision.add(tile)
 
     def delete_tile(self) -> None:
