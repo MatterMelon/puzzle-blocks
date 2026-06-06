@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 
 from pygame.sprite import Group, RenderUpdates
 
@@ -11,10 +12,19 @@ from .tilemaps.registry import _TILEMAP_REGISTRY
 
 logger = get_logger(LoggerDomain.TILEMAP)
 
-class TilemapBuilder:
+class TilemapFactory:
     def __init__(self, tilemap_layers_data: list[TilemapLayerData]):
-        self._tilemaps: list[TilemapLayer] = self._instantiate_tilemaps(tilemap_layers_data)
-        self.collision: Group = Group()
+        self._tilemaps: list[tuple[Tilemap, TilemapLayerData]] = self._instantiate_tilemaps(tilemap_layers_data)
+        self._collision: Group = Group()
+
+    @dataclass
+    class BuildResult:
+        render_group: RenderUpdates
+        collision_group: Group
+
+        def __iter__(self):
+            yield self.render_group
+            yield self.collision_group
 
     def _get_tilemap_class(self, tilemap_id: str) -> type[Tilemap]:
         tilemap_cls = _TILEMAP_REGISTRY.get(tilemap_id.lower())
@@ -53,9 +63,9 @@ class TilemapBuilder:
                 for x_index, tile_id in enumerate(row):
                     tile = self._resolve_tile(tilemap, tile_id)
                     tilemap.place_tile(tile, x_index, y_index, True)
-            self.collision.add(tilemap.collision.sprites())
+            self._collision.add(tilemap.collision.sprites())
 
-    def build(self) -> RenderUpdates:
+    def build(self) -> BuildResult:
         built_tilemap = RenderUpdates()
         logger.info("Start building...")
         for tilemap, layer_data in self._tilemaps:
@@ -65,4 +75,4 @@ class TilemapBuilder:
             logger.success(f"Layer '{tilemap}' built successfuly")
         logger.success("Tilemaps built successfuly")
 
-        return built_tilemap
+        return self.BuildResult(built_tilemap, self._collision)

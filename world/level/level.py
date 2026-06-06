@@ -10,7 +10,7 @@ from world.entity.actions.move_action import MoveAction
 from world.entity.entity import Entity
 from world.entity.player import Player
 from world.tilemap.exceptions import TilemapError
-from world.tilemap.tilemap_builder import TilemapBuilder
+from world.tilemap.tilemap_factory import TilemapFactory
 
 from world.level.exceptions import LevelError
 from world.level.level_data import LevelData
@@ -24,9 +24,11 @@ class Level:
         if data is None:
             raise ValueError("Cannot build a level with None data")
         self._data: LevelData = data
-        self._tilemap_builder: TilemapBuilder = TilemapBuilder(data.map_data.tilemap_layers)
-        self._tilemap: RenderUpdates
-        self.collision_resolver: CollisionResolver = CollisionResolver(self._tilemap_builder.collision)
+        self._tilemap_factory: TilemapFactory = TilemapFactory(data.map_data.tilemap_layers)
+        self._tilemap: RenderUpdates = RenderUpdates()
+        self._collision: Group = Group()
+
+        self.collision_resolver: CollisionResolver = CollisionResolver(self._tilemap_factory._collision)
         self._player: Player = Player(16, 16)
         self._player_controller: Controller = KeyboardController(self._player)
         self._entities = pg.sprite.LayeredUpdates()
@@ -37,9 +39,9 @@ class Level:
     def build(self) -> None:
         logger.info(f"Start building '{self._data.id}'")
         try:
-            self._tilemap = self._tilemap_builder.build()
-            self.collision_resolver.update_collision(self._tilemap_builder.collision)
-            print(f"Collision: {self._tilemap_builder.collision}")
+            self._tilemap, self._collision = self._tilemap_factory.build()
+            self.collision_resolver.update_collision(self._collision)
+            print(f"Collision: {self._tilemap_factory._collision}")
         except(TilemapError):
             logger.exception(f"Error occured on building a tilemap for '{self._data.id}' ")
             raise LevelError()
