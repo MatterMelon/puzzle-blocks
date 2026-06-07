@@ -3,9 +3,16 @@ import sys
 import pygame as pg
 
 from config.game_config import GameConfig
+from controllers import controller
+from controllers.keyboard_controller import KeyboardController
 from core.logging.logger_config import configure_logging
+from world.entity import player
+from world.entity.player import Player
+from world.level import level_factory
 from world.level.exceptions import LevelError
-from world.level.json_level_loader import JsonLevelLoader
+from world.level.level_factory import LevelFactory
+from world.level.level_loader.level_loader import LevelLoader
+from world.level.level_loader.json_level_loader import JsonLevelLoader
 from world.level.level import Level
 from world.level.level_data import LevelData
 
@@ -20,19 +27,27 @@ configure_logging()
 
 level_data: LevelData | None = None
 
+level_loader: LevelLoader = JsonLevelLoader('./data/levels/level_02.json')
+
 try:
-    level_data = JsonLevelLoader.load('./data/levels/level_02.json')
+    level_data = level_loader.load()
 except LevelError:
     pass
 
-level = Level(level_data)
-level.build()
+controller = KeyboardController()
+player = Player(16, 16)
+
+level = LevelFactory().build_level(level_data)
+level.add_entity(player)
 
 while True:
     for e in pg.event.get():
         if e.type == pg.QUIT:
             pg.quit()
             sys.exit()
+        action = controller.get_action(e)
+        if action:
+            player.action = action
         level.handle_event(e)
             
     screen.fill(pg.Color(255,255,255))

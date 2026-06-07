@@ -3,6 +3,6 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True)
 class LevelsConfig:
-    TILEMAP_SUFFIX: str = "Tilemap"
+    TILESET_SUFFIX: str = "Tilemap"
 
 LEVELS_CONFIG = LevelsConfig()

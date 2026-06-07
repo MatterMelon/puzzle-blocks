@@ -15,7 +15,7 @@ class SpriteSheet:
         image = self.__sheet.subsurface(rect)
         return image.convert_alpha()
 
-    def load_strip(self, rect, image_count):
+    def load_strip(self, rect, image_count) -> list[Surface]:
         tup = [(rect[0] + rect[2] * i, rect[1], rect[2], rect[3])
                for i in range(image_count)]
         return [self.get_image(*frame) for frame in tup]

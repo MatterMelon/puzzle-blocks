@@ -3,10 +3,10 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True)
 class GameConfig:
-    GAME_NAME = "PuzzleBlocks"
-    WINDOW_WIDTH = 800
-    WINDOW_HEIGHT = 600
-    GRID_SIZE = 16
+    GAME_NAME: str = "PuzzleBlocks"
+    WINDOW_WIDTH: int = 800
+    WINDOW_HEIGHT: int = 600
+    GRID_SIZE: int = 16
 
-    FONT_FAMILY = "Arial"
-    FONT_SIZE = 24
+    FONT_FAMILY: str = "Arial"
+    FONT_SIZE: int = 24

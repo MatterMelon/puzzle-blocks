@@ -1,10 +1,9 @@
 from abc import ABC, abstractmethod
 
-from .level_data import LevelData
+from world.level.level_data import LevelData
 
 
 class LevelLoader(ABC):
-    @staticmethod
     @abstractmethod
-    def load(path: str) -> LevelData:
+    def load(self) -> LevelData:
         pass
