@@ -6,3 +6,6 @@ class MissingTilemapData(TilemapError):
 
 class MissingTileData(TilemapError):
     pass
+
+class MissingTilemapLayerData(TilemapError):
+    pass

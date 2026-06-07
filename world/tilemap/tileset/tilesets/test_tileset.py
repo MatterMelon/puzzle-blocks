@@ -1,14 +1,15 @@
 from enum import IntEnum
 
-from ..tile_properties import TileProperties
-from ...spritesheet import SpriteSheet
-from ..tile_definition import TileDefinition
-from ..tilemap import Tilemap
-from .registry import register_tilemap
+from world.tilemap.tile.tile_properties import TileProperties
+from world.spritesheet import SpriteSheet
+from world.tilemap.tile.tile_definition import TileDefinition
+from world.tilemap.tilemap import Tilemap
+from world.tilemap.tileset.registry import register_tileset
+from world.tilemap.tileset.tileset import Tileset
 
 
-@register_tilemap
-class TestTilemap(Tilemap):
+@register_tileset
+class TestTilemap(Tileset):
     class TileType(IntEnum):
         UNKNOWN = 0
         GRASS = 1

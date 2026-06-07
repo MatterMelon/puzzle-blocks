@@ -1,10 +1,9 @@
 from dataclasses import dataclass
 
-from .tilemap import Tilemap
-from .tilemap_layer_data import TilemapLayerData
+from pygame.sprite import Group, Sprite
 
 
 @dataclass
 class TilemapLayer:
-    tilemap: Tilemap
-    tiles: TilemapLayerData
+    tiles: Group[Sprite]
+    collision: Group[Sprite]

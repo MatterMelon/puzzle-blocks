@@ -29,7 +29,6 @@ except LevelError:
     pass
 
 level = Level(level_data)
-level.build()
 
 while True:
     for e in pg.event.get():

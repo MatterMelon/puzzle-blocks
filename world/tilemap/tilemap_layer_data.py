@@ -1,7 +1,9 @@
 from dataclasses import dataclass
+from typing import TypeAlias
 
+TileName: TypeAlias = str
 
 @dataclass
 class TilemapLayerData:
-    tilemap_id: str
-    tiles: list[list[str]]
+    tileset_id: str
+    tiles: list[list[TileName]]
