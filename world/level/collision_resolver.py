@@ -1,13 +1,13 @@
 from core.logging.logger import LoggerDomain, get_logger
 
-from pygame.sprite import Group
+from pygame.sprite import Group, Sprite
 
 from world.entity.entity import Entity
 
 logger = get_logger(LoggerDomain.LEVEL)
 
 class CollisionResolver:
-    def __init__(self, collision_group):
+    def __init__(self, collision_group: Group[Sprite]):
         self.collision_group: Group = collision_group
 
     def update_collision(self, collision_group: Group) -> None:

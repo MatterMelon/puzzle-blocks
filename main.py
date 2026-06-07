@@ -4,8 +4,9 @@ import pygame as pg
 
 from config.game_config import GameConfig
 from controllers import controller
-from controllers.entity_keyboard_controller import KeyboardController
+from controllers.keyboard_controller import KeyboardController
 from core.logging.logger_config import configure_logging
+from world.entity import player
 from world.entity.player import Player
 from world.level import level_factory
 from world.level.exceptions import LevelError
@@ -33,13 +34,20 @@ try:
 except LevelError:
     pass
 
+controller = KeyboardController()
+player = Player(16, 16)
+
 level = LevelFactory().build_level(level_data)
+level.add_entity(player)
 
 while True:
     for e in pg.event.get():
         if e.type == pg.QUIT:
             pg.quit()
             sys.exit()
+        action = controller.get_action(e)
+        if action:
+            player.action = action
         level.handle_event(e)
             
     screen.fill(pg.Color(255,255,255))

@@ -1,5 +1,3 @@
-from controllers.entity_keyboard_controller import KeyboardController
-from world.entity.player import Player
 from world.level.collision_resolver import CollisionResolver
 from world.level.level import Level
 from world.level.level_data import LevelData
@@ -16,8 +14,6 @@ class LevelFactory:
             raise ValueError("Cannot build a level with None data")
 
         tilemap = self._tilemap_factory.build(data.map_data.tilemap_layers)
-        player = Player(16, 16)
-        controller = KeyboardController(player)
-        collision_resolver = CollisionResolver(tilemap)
+        collision_resolver = CollisionResolver(tilemap.collisions)
 
-        return Level(tilemap, controller, collision_resolver)
+        return Level(tilemap, collision_resolver)
