@@ -14,13 +14,13 @@ from world.entity.entity_data import EntityData
 logger = get_logger(LoggerDomain.LEVEL)
 
 class JsonLevelLoader(LevelLoader):
-    def __init__(self, file_path: str):
+    def __init__(self, base_dir: str):
         super().__init__()
-        self._path: str = file_path
+        self._base_dir: str = base_dir
 
-    def load(self) -> LevelData:
+    def load(self, level_id: str) -> LevelData:
         try:
-            with open(self._path, 'r', encoding='utf-8') as file:
+            with open(self._base_dir + level_id + ".json", 'r', encoding='utf-8') as file:
                 data = json.load(file)
                 level_data = LevelData(
                     str.strip(data['id']),

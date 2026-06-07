@@ -5,5 +5,5 @@ from world.level.level_data import LevelData
 
 class LevelLoader(ABC):
     @abstractmethod
-    def load(self) -> LevelData:
+    def load(self, level_id: str) -> LevelData:
         pass
