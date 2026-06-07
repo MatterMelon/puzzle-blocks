@@ -3,8 +3,13 @@ import sys
 import pygame as pg
 
 from config.game_config import GameConfig
+from controllers import controller
+from controllers.entity_keyboard_controller import KeyboardController
 from core.logging.logger_config import configure_logging
+from world.entity.player import Player
+from world.level import level_factory
 from world.level.exceptions import LevelError
+from world.level.level_factory import LevelFactory
 from world.level.level_loader.level_loader import LevelLoader
 from world.level.level_loader.json_level_loader import JsonLevelLoader
 from world.level.level import Level
@@ -28,7 +33,7 @@ try:
 except LevelError:
     pass
 
-level = Level(level_data)
+level = LevelFactory().build_level(level_data)
 
 while True:
     for e in pg.event.get():
