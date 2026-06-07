@@ -1,17 +1,16 @@
 import pygame as pg
 
 from config.game_config import GameConfig
+from controllers.controller import Controller
 from core.logging.logger import LoggerDomain, get_logger
 from world.entity.actions.action import Action
 from world.entity.actions.move_action import MoveAction
 
-from controllers.entity_controller import EntityController
-
 logger = get_logger(LoggerDomain.CONTROLLER)
 
-class KeyboardController(EntityController):
-    def __init__(self, entity):
-        super().__init__(entity)
+class KeyboardController(Controller):
+    def __init__(self):
+        super().__init__()
 
     def get_action(self, e: pg.Event) -> Action | None:
         if e.type == pg.KEYDOWN:
