@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import NamedTuple
 
 from pygame.sprite import Group, RenderUpdates
 
@@ -14,7 +15,7 @@ logger = get_logger(LoggerDomain.TILEMAP)
 
 class TilemapFactory:
     def __init__(self, tilemap_layers_data: list[TilemapLayerData]):
-        self._tilemaps: list[tuple[Tilemap, TilemapLayerData]] = self._instantiate_tilemaps(tilemap_layers_data)
+        self._tilemap: list[tuple[Tilemap, TilemapLayerData]] = self._prepare_tilemap(tilemap_layers_data)
         self._collision: Group = Group()
 
     @dataclass
@@ -26,6 +27,10 @@ class TilemapFactory:
             yield self.render_group
             yield self.collision_group
 
+    class TilemapLayerContext(NamedTuple):
+        instance: Tilemap
+        data: TilemapLayerData
+
     def _get_tilemap_class(self, tilemap_id: str) -> type[Tilemap]:
         tilemap_cls = _TILEMAP_REGISTRY.get(tilemap_id.lower())
         if tilemap_cls is None:
@@ -35,15 +40,19 @@ class TilemapFactory:
             )
 
         return tilemap_cls
-    
-    def _instantiate_tilemaps(self, tilemap_layers_data: list[TilemapLayerData]) -> list[tuple[Tilemap, TilemapLayerData]]:
-        instances = []
-        for layer_data in tilemap_layers_data:
-            tilemap_cls = self._get_tilemap_class(layer_data.tilemap_id)
-            instances.append((tilemap_cls(), layer_data))
 
-        return instances
-    
+    def _instantiate_tilemap(self, tilemap_id: str) -> Tilemap:
+        tilemap_cls = self._get_tilemap_class(tilemap_id)
+        tilemap_instance = tilemap_cls()
+        return tilemap_instance
+
+    def _bind_tilemap_to_data(self, layer_data: TilemapLayerData) -> tuple[Tilemap, TilemapLayerData]:
+        tilemap = self._instantiate_tilemap(layer_data.tilemap_id)
+        return tilemap, layer_data
+
+    def _prepare_tilemap(self, tilemap_layers_data: list[TilemapLayerData]) -> list[tuple[Tilemap, TilemapLayerData]]:
+        return [self._bind_tilemap_to_data(layer_data) for layer_data in tilemap_layers_data]
+
     def _resolve_tile(self, tilemap: Tilemap, tile_id: str) -> int:
         try: 
             return tilemap.TileType[tile_id]
@@ -68,7 +77,7 @@ class TilemapFactory:
     def build(self) -> BuildResult:
         built_tilemap = RenderUpdates()
         logger.info("Start building...")
-        for tilemap, layer_data in self._tilemaps:
+        for tilemap, layer_data in self._tilemap:
             logger.info(f"Layer '{tilemap}' start building...")
             self._build_tiles(tilemap, layer_data)
             built_tilemap.add(tilemap.get_tiles())
