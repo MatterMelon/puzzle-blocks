@@ -22,6 +22,7 @@ class Game:
     def _process_events(self):
         for e in pg.event.get():
             if e.type == pg.QUIT:
+                self._is_running = False
                 pg.quit()
                 sys.exit()
             self._scene_manager.process_scene(e)

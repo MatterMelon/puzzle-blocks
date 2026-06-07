@@ -14,11 +14,10 @@ class GameScene(Scene):
     def __init__(self):
         super().__init__()
 
-        # TODO: Переписать LevelLoader на level_loader.load('path')
-        self._level_loader: LevelLoader = JsonLevelLoader('./data/levels/level_02.json')
+        self._level_loader: LevelLoader = JsonLevelLoader('./data/levels/')
         self._level_data: LevelData | None = None
         try:
-            self._level_data = self._level_loader.load()
+            self._level_data = self._level_loader.load("level_02")
         except LevelError:
             pass
 
