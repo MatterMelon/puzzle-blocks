@@ -24,7 +24,11 @@ class GameScene(Scene):
 
         self._program: Program = Program([
             MoveInstruction(Direction.RIGHT),
-            MoveInstruction(Direction.RIGHT)
+            MoveInstruction(Direction.RIGHT),
+            MoveInstruction(Direction.RIGHT),
+            MoveInstruction(Direction.RIGHT),
+            MoveInstruction(Direction.DOWN),
+            MoveInstruction(Direction.DOWN),
         ])
         self._player = Player(16, 16)
         self._program_runner: ProgramRunner = ProgramRunner(self._player)

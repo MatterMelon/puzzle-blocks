@@ -32,6 +32,9 @@ class ProgramRunner:
     def update(self) -> None:
         if self._is_program_finished or not self._program: return None
 
+        if not self._entity.is_idle: return None
+
         action = self._get_next_action()
-        self._entity.action = action
+        if action:
+            self._entity.set_action(action)
         return None
