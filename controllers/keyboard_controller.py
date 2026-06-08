@@ -3,8 +3,8 @@ import pygame as pg
 from config.game_config import GameConfig
 from controllers.controller import Controller
 from core.logging.logger import LoggerDomain, get_logger
-from world.entity.actions.action import Action
-from world.entity.actions.move_action import MoveAction
+from world.actions.action import Action
+from world.actions.move_action import MoveAction
 
 logger = get_logger(LoggerDomain.CONTROLLER)
 
@@ -12,7 +12,7 @@ class KeyboardController(Controller):
     def __init__(self):
         super().__init__()
 
-    def get_action(self, e: pg.Event) -> Action | None:
+    def get_command(self, e: pg.Event) -> Action | None:
         if e.type == pg.KEYDOWN:
             match e.key:
                 case pg.K_UP:

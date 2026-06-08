@@ -2,8 +2,7 @@ import pygame as pg
 from pygame import Event
 from pygame.sprite import Sprite
 
-from world.entity.actions import action
-from world.entity.actions.action import Action
+from world.actions.action import Action
 
 
 class Entity(Sprite):

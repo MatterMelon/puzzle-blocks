@@ -1,9 +1,8 @@
 import pygame as pg
 from pygame import Event, Surface
 
-from controllers.controller import Controller
 from core.logging.logger import LoggerDomain, get_logger
-from world.entity.actions.move_action import MoveAction
+from world.actions.move_action import MoveAction
 from world.entity.entity import Entity
 from world.tilemap.tilemap import Tilemap
 
@@ -31,6 +30,8 @@ class Level:
                 if isinstance(action, MoveAction):
                     if self.collision_resolver.can_move(entity, action.dx, action.dy):
                         entity.move_to(action.dx, action.dy)
+
+
             entity.update()
 
     def draw(self, surface: Surface):
