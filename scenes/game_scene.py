@@ -1,10 +1,9 @@
 from pygame import Event, Surface
 
-from controllers import controller
-from controllers.keyboard_controller import KeyboardController
 from controllers.program_controller import ProgramController
-from programming.Program import Program
+from programming.program import Program
 from programming.instructions.move_instruction import MoveInstruction, Direction
+from programming.program_runner import ProgramRunner
 from scenes.scene import Scene
 from world.entity.player import Player
 from world.level.exceptions import LevelError
@@ -25,18 +24,15 @@ class GameScene(Scene):
         except LevelError:
             pass
 
-        # self._controller = KeyboardController()
-        self.program: Program = Program()
-        self.program.set_instructions([
+        self._program: Program = Program([
             MoveInstruction(Direction.RIGHT),
-            MoveInstruction(Direction.RIGHT),
-            MoveInstruction(Direction.RIGHT),
-            MoveInstruction(Direction.RIGHT),
-            MoveInstruction(Direction.DOWN)
+            MoveInstruction(Direction.RIGHT)
         ])
         self._controller = ProgramController()
 
         self._player = Player(16, 16)
+        self._program_runner: ProgramRunner = ProgramRunner(self._player)
+        self._program_runner.set_program(self._program)
 
         self._level = LevelFactory().build_level(self._level_data)
         self._level.add_entity(self._player)
@@ -45,9 +41,7 @@ class GameScene(Scene):
         self._level.handle_event(e)
 
     def update(self) -> None:
-        instruction = self.program.get_instruction()
-        if instruction and self._player.action is None:
-            self._player.action = self._controller.get_action(instruction)
+        self._program_runner.update()
         self._level.update()
 
     def render(self, surface: Surface) -> None:
