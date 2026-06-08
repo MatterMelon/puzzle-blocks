@@ -1,17 +1,15 @@
 from pygame import Event, Surface
 
-from controllers.program_controller import ProgramController
 from programming.program import Program
 from programming.instructions.move_instruction import MoveInstruction, Direction
 from programming.program_runner import ProgramRunner
-from scenes.scene import Scene
+from scenes.scene import Scene, logger
 from world.entity.player import Player
 from world.level.exceptions import LevelError
 from world.level.level_data import LevelData
 from world.level.level_factory import LevelFactory
 from world.level.level_loader.json_level_loader import JsonLevelLoader
 from world.level.level_loader.level_loader import LevelLoader
-
 
 class GameScene(Scene):
     def __init__(self):
@@ -28,14 +26,15 @@ class GameScene(Scene):
             MoveInstruction(Direction.RIGHT),
             MoveInstruction(Direction.RIGHT)
         ])
-        self._controller = ProgramController()
-
         self._player = Player(16, 16)
         self._program_runner: ProgramRunner = ProgramRunner(self._player)
         self._program_runner.set_program(self._program)
 
         self._level = LevelFactory().build_level(self._level_data)
         self._level.add_entity(self._player)
+
+    def on_start(self) -> None:
+        logger.info(f"switched to 'GameScene'")
 
     def process_event(self, e: Event) -> None:
         self._level.handle_event(e)
