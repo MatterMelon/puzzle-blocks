@@ -39,6 +39,7 @@ class GameScene(Scene):
 
     def on_start(self) -> None:
         logger.info(f"switched to 'GameScene'")
+        self._program_runner.run()
 
     def process_event(self, e: Event) -> None:
         self._level.handle_event(e)

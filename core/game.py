@@ -3,6 +3,7 @@ import sys
 import pygame as pg
 
 from config.game_config import GameConfig
+from core.logging.logger_config import configure_logging
 from scenes.game_scene import GameScene
 from scenes.scene_manager import SceneManager
 
@@ -16,8 +17,8 @@ class Game:
         pg.init()
         pg.font.init()
         self._font = pg.font.SysFont(GameConfig.FONT_FAMILY, GameConfig.FONT_SIZE)
-
         self._scene_manager = SceneManager([GameScene()])
+        configure_logging()
 
     def _process_events(self):
         for e in pg.event.get():
