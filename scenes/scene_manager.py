@@ -7,16 +7,19 @@ from pygame.event import Event
 class SceneManager:
     def __init__(self, scenes: list[Scene]) -> None:
         self._scenes: list[Scene] = scenes
-        self.current_scene: Scene = self._scenes[0]
+        self._current_scene: Scene | None = None
+        self.set_scene(scenes[0])
 
     def set_scene(self, scene: Scene) -> None:
-        self._scenes.append(scene)
+        if self._current_scene: self._current_scene.on_end()
+        self._current_scene = scene
+        if self._current_scene: self._current_scene.on_start()
 
     def process_scene(self, e: Event) -> None:
-        self.current_scene.process_event(e)
+        if self._current_scene: self._current_scene.process_event(e)
 
     def update_scene(self) -> None:
-        self.current_scene.update()
+        if self._current_scene: self._current_scene.update()
 
     def render_scene(self, surface: Surface) -> None:
-        self.current_scene.render(surface)
+        if self._current_scene: self._current_scene.render(surface)

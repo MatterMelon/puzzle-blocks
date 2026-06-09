@@ -9,4 +9,4 @@ class LoggerDomain(StrEnum):
     LEVEL = 'Level'
     ENTITY = 'Entity'
     TILEMAP = 'Tilemap'
-    CONTROLLER = 'Controller'
+    SCENE = 'Scene'

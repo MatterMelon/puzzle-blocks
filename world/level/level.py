@@ -1,9 +1,9 @@
 import pygame as pg
 from pygame import Event, Surface
 
-from controllers.controller import Controller
 from core.logging.logger import LoggerDomain, get_logger
-from world.entity.actions.move_action import MoveAction
+from world.actions.action_processor import ActionProcessor
+from world.actions.move_action import MoveAction
 from world.entity.entity import Entity
 from world.tilemap.tilemap import Tilemap
 
@@ -16,6 +16,7 @@ class Level:
         self.tilemap: Tilemap = tilemap
         self.collision_resolver: CollisionResolver = collision_resolver
         self._entities = pg.sprite.LayeredUpdates()
+        self._action_processor: ActionProcessor = ActionProcessor(self._entities, collision_resolver)
 
     def add_entity(self, entity: Entity):
         self._entities.add(entity)
@@ -24,14 +25,8 @@ class Level:
         pass
 
     def update(self) -> None:
-        entity: Entity
-        for entity in self._entities:
-            action = entity.get_action()
-            if action:
-                if isinstance(action, MoveAction):
-                    if self.collision_resolver.can_move(entity, action.dx, action.dy):
-                        entity.move_to(action.dx, action.dy)
-            entity.update()
+        self._action_processor.update()
+        self._entities.update()
 
     def draw(self, surface: Surface):
         self.tilemap.draw(surface)

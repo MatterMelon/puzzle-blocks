@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from world.entity.actions.action import Action
+from world.actions.action import Action
 
 
 @dataclass

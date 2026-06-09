@@ -10,12 +10,11 @@ class Player(Entity):
         super().__init__(*groups)
         self.image: pg.Surface = pg.image.load_sized_svg("./assets/robot.svg", (16, 16))
         self.rect: pg.Rect = self.image.get_rect()
-        self.rect.x = pos_x
-        self.rect.y = pos_y
+        self.teleport_to(pos_x, pos_y)
         self._step = GameConfig.GRID_SIZE
     
     def handle_event(self, e: Event) -> None:
         pass
 
     def update(self) -> None:
-        pass
+        super().update()
