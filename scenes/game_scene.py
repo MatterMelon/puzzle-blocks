@@ -24,8 +24,13 @@ class GameScene(Scene):
             pass
 
         self._program: Program = Program([
-            RepeatInstruction(50, [
-                MoveInstruction(Direction.RIGHT)
+            RepeatInstruction(3, [
+                RepeatInstruction(3, [
+                    MoveInstruction(Direction.RIGHT),
+                ]),
+                RepeatInstruction(3, [
+                    MoveInstruction(Direction.LEFT),
+                ])
             ])
         ])
         self._player = Player(16, 16)
