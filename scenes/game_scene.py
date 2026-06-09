@@ -1,5 +1,6 @@
 from pygame import Event, Surface
 
+from programming.instructions.repeat_instruction import RepeatInstruction
 from programming.program import Program
 from programming.instructions.move_instruction import MoveInstruction, Direction
 from programming.program_runner import ProgramRunner
@@ -23,12 +24,9 @@ class GameScene(Scene):
             pass
 
         self._program: Program = Program([
-            MoveInstruction(Direction.RIGHT),
-            MoveInstruction(Direction.RIGHT),
-            MoveInstruction(Direction.RIGHT),
-            MoveInstruction(Direction.RIGHT),
-            MoveInstruction(Direction.DOWN),
-            MoveInstruction(Direction.DOWN),
+            RepeatInstruction(50, [
+                MoveInstruction(Direction.RIGHT)
+            ])
         ])
         self._player = Player(16, 16)
         self._program_runner: ProgramRunner = ProgramRunner(self._player)

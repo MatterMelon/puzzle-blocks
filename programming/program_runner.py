@@ -1,6 +1,7 @@
 from core.logging.logger import get_logger
 from core.logging.loggger_domain import LoggerDomain
 from programming.program import Program
+from programming.program_expander import ProgramExpander
 from programming.program_interpreter import ProgramInterpreter
 from world.actions.action import Action
 from world.entity.entity import Entity
@@ -32,7 +33,8 @@ class ProgramRunner:
         return action
 
     def set_program(self, program: Program) -> None:
-        self._program = program
+        # TODO: Реализовать стек выполнения программы
+        self._program = ProgramExpander.expand(program)
         self._is_finished = False
         self._instruction_index = 0
 
